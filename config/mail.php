@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => env('MAIL_FROM_ADDRESS', null), 'name' => env('MAIL_FROM_NAME')],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => env('MAIL_ENCRYPTION', null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => env('MAIL_USERNAME'),
+	'username' => env('MAIL_USERNAME', null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => env('MAIL_PASSWORD'),
+	'password' => env('MAIL_PASSWORD', null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,6 +119,5 @@ return [
 	|
 	*/
 
-	'pretend' => false,
-
+	'pretend' => env('MAIL_PRETEND', false),
 ];
