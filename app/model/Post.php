@@ -10,12 +10,12 @@ class Post extends Model {
 	// 1対多のリレーション
 	public function category()
 	{
-		return $this->belongsTo('Category');
+		return $this->belongsTo('App\model\Category');
 	}
 
 	public function user()
 	{
-		return $this->belongsTo('User');
+		return $this->belongsTo('App\User');
 	}
 
 }

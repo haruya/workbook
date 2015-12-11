@@ -10,6 +10,6 @@ class Category extends Model {
 	// 1対多のリレーション
 	public function Post()
 	{
-		return $this->hasMany('Post');
+		return $this->hasMany('App\model\Post');
 	}
 }
