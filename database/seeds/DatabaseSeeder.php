@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 use Faker\Factory as Faker;
 use Carbon\Carbon;
+use App\User;
+use App\Role;
 use App\model\Category;
 use App\model\Post;
 
@@ -20,12 +22,45 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
+		$this->call('UsersTableSeeder');
+		$this->call('RolesTableSeeder');
 		$this->call('CategoriesTableSeeder');
 		$this->call('PostsTableSeeder');
 
 		Model::reguard();
 	}
 
+}
+
+class UsersTableSeeder extends Seeder {
+	public function run()
+	{
+		DB::table('users')->delete();
+
+		User::create([
+		'name' => 'ichikawa',
+		'email' => 'ichikawa0210h@gmail.com',
+		'password' => Hash::make('ichikawa'),
+		'role_id' => '2',
+		]);
+
+	}
+}
+
+class RolesTableSeeder extends Seeder {
+	public function run()
+	{
+		DB::table('roles')->delete();
+
+		Role::create([
+		'name' => '一般ユーザ',
+		]);
+
+		Role::create([
+		'name' => '管理者',
+		]);
+
+	}
 }
 
 class CategoriesTableSeeder extends Seeder
@@ -42,6 +77,7 @@ class CategoriesTableSeeder extends Seeder
 
 		for ($i = 0; $i < count($categoryList); $i++) {
 			Category::create([
+			'user_id' => 1,
 			'name' => $categoryList[$i]
 			]);
 		}

@@ -11,6 +11,15 @@
       <!-- フラッシュメッセージ表示 -->
       <p id="flash_message" class="alert alert-success">{{ Session::get('flash_message') }}</p>
     @endif
+    @if(count($errors) > 0)
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
     <h3 class="bg-primary" style="padding: 5px">{{ $post->title }}</h3>
     <p class="catEria"><span class="catTag">{{ $post->category->name }}</span></p>
     <pre class="brush: c-sharp;">{{ $post->content }}</pre>

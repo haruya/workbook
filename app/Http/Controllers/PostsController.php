@@ -22,7 +22,7 @@ class PostsController extends Controller {
 	public function getIndex()
 	{
 		$allCategories = array("すべて");
-		$categories = Category::lists('name', 'id');
+		$categories = Category::where('user_id', Auth::user()->id)->lists('name', 'id');
 		$allCategories += $categories;
 
 		// 値の取得
@@ -30,7 +30,7 @@ class PostsController extends Controller {
 		$category = Input::get('category_id');
 		$content = Input::get('content');
 
-		// 最新投稿順
+		// 最新投稿順_
 		$query = Post::latest('id');
 
 		// もしタイトルがあれば
@@ -83,7 +83,7 @@ class PostsController extends Controller {
 	{
 		$post = Post::findOrFail($id);
 		$this->userIdCheck($post->user_id);
-		$categories = Category::lists('name', 'id');
+		$categories = Category::where('user_id', Auth::user()->id)->lists('name', 'id');
 		return view('posts.update', compact('post', 'categories'));
 	}
 
@@ -110,6 +110,23 @@ class PostsController extends Controller {
 		$post->delete();
 		\Session::flash('flash_message', '削除しました。');
 		return redirect('/');
+	}
+
+	/**
+	 * カテゴリーの作成
+	 */
+	public function postCategoryCreate(Request $request)
+	{
+		$category = Category::where('name', $request->name)->where('user_id', $request->user_id)->get();
+		if (count($category) == 0) {
+			$data = [
+				'user_id' => $request->user_id,
+				'name' => $request->name
+			];
+			Category::create($data);
+		}
+		\Session::flash('flash_message', 'カテゴリーを作成しました。');
+		return redirect()->back();
 	}
 
 	/**

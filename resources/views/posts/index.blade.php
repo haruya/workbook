@@ -29,13 +29,15 @@
         <!-- フラッシュメッセージ表示 -->
         <p id="flash_message" class="alert alert-success">{{ Session::get('flash_message') }}</p>
       @endif
-
-      @if ($errors->all())
-        <!-- エラーメッセージ表示 -->
-        @foreach ($errors->all() as $error)
-          <p class="alert alert-danger">{{ $error }}</p>
-        @endforeach
-      @endif
+    @if(count($errors) > 0)
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
       {!! Form::open(['action' => 'PostsController@postIndex']) !!}
         <div class="form-group">
           {!! Form::label('title', 'タイトル', ['class' => 'control-label']) !!}
@@ -50,7 +52,8 @@
           {!! Form::textarea('content', '', ['class' => 'form-control', 'rows' => 5]) !!}
         </div>
         <div class="form-group">
-          {!! Form::submit('追加', ['class' => 'btn btn-primary']) !!}
+          {!! Form::submit('追加', ['class' => 'btn btn-primary']) !!}&nbsp;
+          <a href="#" data-toggle="modal" data-target="#category" class="btn btn-warning">カテゴリーの作成</a>
         </div>
       {!! Form::close() !!}
       <h2 class="text-primary">記事一覧</h2>
@@ -68,6 +71,30 @@
       @else
         <p>記事が存在しません。</p>
       @endif
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<div class="modal fade" id="category">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title alert alert-success">カテゴリーの作成</h4>
+      </div>
+      {!! Form::open(['action' => 'PostsController@postCategoryCreate', 'id' => 'categoryForm']) !!}
+      <div class="modal-body">
+        <div class="form-group">
+          {!! Form::label('name', 'カテゴリー名', ['class' => 'control-label']) !!}
+          {!! Form::text('name', '', ['class' => 'form-control']) !!}
+        </div>
+      </div>
+      <div class="modal-footer">
+        {!! Form::hidden('user_id', Auth::user()->id) !!}
+        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        <input type="button" id="categorySubmit" class="btn btn-primary" value="作成" />
+      </div>
+      {!! Form::close() !!}
     </div>
   </div>
 </div>
