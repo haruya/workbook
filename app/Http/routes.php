@@ -17,6 +17,7 @@
 Route::get('/', 'PostsController@getIndex');
 Route::controller('posts', 'PostsController');
 Route::controller('users', 'UsersController');
+Route::controller('categories', 'CategoriesController');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

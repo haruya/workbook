@@ -24,25 +24,24 @@ $(function() {
     $('#role input[name="name"]').val('');
     $('#role #nameErr').remove();
   });
-
-  // カテゴリー作成バリデーション
-  $('#categorySubmit').click(function() {
-    $(this).attr('disabled', 'disabled');
-    $('#category #nameErr').remove();
-    var error = false;
-    var name = $('#category input[name="name"]').val();
-    if (name.length == 0) {
-      $('#category input[name="name"]').parent().after('<p id="nameErr" class="alert alert-danger">カテゴリー名は入力必須です。</p>');
-      error = true;
-    }
-    if (error == false) {
-      $('#categoryForm').submit();
-    }
-    $(this).removeAttr('disabled');
+  
+  // カテゴリーdialogオープン
+  $('#catLink').click(function() {
+    $('#catDialog').dialog('open');
   });
-  // カテゴリーのダイアログを閉じたときの処理
-  $('#category').on('hidden.bs.modal', function () {
-    $('#category input[name="name"]').val('');
-    $('#category #nameErr').remove();
+  
+  // dialogの設定
+  $('#catDialog').dialog({
+    autoOpen: false,
+    width: "85%",
+    height: "auto",
+    show: "drop",
+    hide: "drop",
+    modal: true,
+    buttons: {
+      "閉じる": function() {
+        $(this).dialog('close');
+      }
+    }
   });
 });

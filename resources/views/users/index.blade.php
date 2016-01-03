@@ -46,6 +46,7 @@
         @endforeach
       </tbody>
     </table>
+    {!! str_replace('/?', '?', $users->render()) !!}
   @else
     <p>ユーザが存在しません。</p>
   @endif

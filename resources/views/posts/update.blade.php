@@ -38,33 +38,13 @@
       <div class="form-group">
         {!! Form::hidden('id', $post->id) !!}
         {!! Form::submit('編集', ['class' => 'btn btn-warning']) !!}&nbsp;
-        <a href="#" data-toggle="modal" data-target="#category" class="btn btn-warning">カテゴリーの作成</a>
+        <span id="catLink" class="btn btn-warning">カテゴリー操作</span>
       </div>
     {!! Form::close() !!}
   </div>
 </div>
-<!-- modal -->
-<div class="modal fade" id="category">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title alert alert-success">カテゴリーの作成</h4>
-      </div>
-      {!! Form::open(['action' => 'PostsController@postCategoryCreate', 'id' => 'categoryForm']) !!}
-      <div class="modal-body">
-        <div class="form-group">
-          {!! Form::label('name', 'カテゴリー名', ['class' => 'control-label']) !!}
-          {!! Form::text('name', '', ['class' => 'form-control']) !!}
-        </div>
-      </div>
-      <div class="modal-footer">
-        {!! Form::hidden('user_id', Auth::user()->id) !!}
-        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-        <input type="button" id="categorySubmit" class="btn btn-primary" value="作成" />
-      </div>
-      {!! Form::close() !!}
-    </div>
-  </div>
+<!-- category_dialog -->
+<div id="catDialog" title="カテゴリー操作">
+  <iframe src="{{ asset('/categories/') }}" width="100%" height="500px" frameborder="0"></iframe>
 </div>
 @stop
